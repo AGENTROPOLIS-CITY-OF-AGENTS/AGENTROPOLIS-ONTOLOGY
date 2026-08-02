@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.dev/ontology/rcp/v0.1/vocabulary.json",
+  "title": "Agentropolis Reality Construction Protocol Vocabulary",
+  "version": "rcp/0.1-draft",
+  "authority": {
+    "semantic_authority": "wiredchaos/AGENTROPOLIS-ONTOLOGY",
+    "protocol_authority": "wiredchaos/AGENTROPOLIS-CREATOR"
+  },
+  "terms": {
+    "WorldPackage": "Portable governed description of a constructed reality.",
+    "WorldDNA": "Stable semantic identity, canon, goals, constraints and provenance for a world.",
+    "SpatialConstraintGraph": "Relationships such as inside, adjacent, connected, visible, reachable and restricted.",
+    "ProceduralLaw": "Seeded rule that expands intent into repeatable geometry or simulation state.",
+    "SemanticGeometry": "Geometry linked to identity, purpose, permissions, affordances and state.",
+    "RuntimeBinding": "Declared mapping from protocol concepts to an execution engine or delivery target.",
+    "AuditProfile": "Required geometric, navigation, physics, narrative, policy and performance checks.",
+    "ConstructionReceipt": "Evidence that a compilation stage completed against declared inputs and controls.",
+    "RepairReceipt": "Evidence describing detected failures, approved patches and regression results.",
+    "ReleaseReceipt": "Approval record binding a reviewed World Package to its released artifact set.",
+    "WorldInstance": "Runtime instantiation of a versioned World Package.",
+    "Institution": "Governed world entity that owns a domain, services, authority and memory.",
+    "Affordance": "Action an authorized actor may attempt through a semantic object or region.",
+    "SemanticVolume": "Spatial region carrying meaning, policy, audio, event or interaction semantics.",
+    "DynamicField": "Signal such as traffic, attention, trade, danger, weather or sound that may alter state or geometry."
+  },
+  "relations": {
+    "inside": { "inverse": "contains", "spatial": true },
+    "contains": { "inverse": "inside", "spatial": true },
+    "adjacentTo": { "symmetric": true, "spatial": true },
+    "connectedTo": { "symmetric": true, "spatial": true },
+    "reachableFrom": { "spatial": true },
+    "visibleFrom": { "spatial": true },
+    "occludedBy": { "spatial": true },
+    "governedBy": { "authority": true },
+    "ownedBy": { "authority": true },
+    "permits": { "authority": true },
+    "prohibits": { "authority": true },
+    "compiledFrom": { "provenance": true },
+    "instantiates": { "runtime": true },
+    "emitsReceipt": { "audit": true },
+    "repairs": { "audit": true }
+  },
+  "lifecycle_states": [
+    "intent_received",
+    "contract_compiled",
+    "world_dna_resolved",
+    "geometry_compiled",
+    "runtime_bound",
+    "audit_running",
+    "repair_required",
+    "review_required",
+    "approved",
+    "released",
+    "suspended",
+    "rolled_back",
+    "retired"
+  ],
+  "authority_classes": [
+    "READ_ONLY",
+    "PLAN_ONLY",
+    "BUILD_SANDBOX",
+    "REPAIR_SANDBOX",
+    "RELEASE_PROPOSE",
+    "RELEASE_APPROVE",
+    "PHYSICAL_ACTUATION"
+  ],
+  "invariants": [
+    "A WorldPackage identifier and version are immutable after release.",
+    "Inferred values remain distinguishable from explicit human decisions.",
+    "Render geometry does not imply collision, navigation or interaction geometry.",
+    "A runtime binding cannot increase authority granted by its mandate.",
+    "Physical actuation is outside baseline RCP authority and requires a separate corridor.",
+    "Every released world references a ReleaseReceipt and provenance record."
+  ]
+}
