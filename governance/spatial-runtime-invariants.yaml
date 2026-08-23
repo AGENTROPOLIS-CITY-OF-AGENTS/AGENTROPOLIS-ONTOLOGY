@@ -1,0 +1,75 @@
+version: 1
+name: agentropolis-spatial-runtime-invariants
+status: canonical
+
+invariants:
+  - id: city-sovereignty
+    rule: "The Agentropolis city and canonical world state MUST remain independent of any single runtime, provider, model, renderer, or visualization framework."
+    severity: critical
+
+  - id: runtime-is-tenant
+    rule: "Munder Difflin, HERMES, Codex, Claude Code, Grok, Qwen, local models, DGX nodes, Cloudflare nodes, and future runtimes are governed tenants/adapters and MUST NOT own canonical city state."
+    severity: critical
+
+  - id: authority-not-prompt
+    rule: "No orchestrator, Chief of Staff, GOD agent, system prompt, or model response may expand runtime authority. Authority MUST derive from machine-enforced identity, mandate, policy, and permission boundaries."
+    severity: critical
+
+  - id: renderer-not-truth
+    rule: "The 3D renderer, diorama, cinematic scroll-scrub surface, Mission Control UI, and all visual effects MUST be projections of resolved state and MUST NOT become sources of canonical runtime truth."
+    severity: critical
+
+  - id: diorama-is-lens
+    rule: "Diorama Mode MUST be a scoped view over canonical world state and MUST NOT fork, fabricate, or maintain a parallel simulation state."
+    severity: high
+
+  - id: thermodynamic-single-source
+    rule: "Spatial health, drift, entropy, constraint, quarantine, and halt visuals MUST resolve from the canonical thermodynamic ontology rather than a renderer-specific health model."
+    severity: high
+
+  - id: evaluation-boundary
+    rule: "System-wide model and runtime evaluation belongs to BE. ASBE remains scoped to the Entertainment District and MUST NOT be promoted into system-wide spatial assurance."
+    severity: critical
+
+  - id: aegis-boundary
+    rule: "AEGIS owns policy/risk boundaries. Runtime adapters and renderers MUST NOT bypass or reinterpret AEGIS authorization decisions."
+    severity: critical
+
+  - id: wikivault-provenance
+    rule: "Runtime memory, terminal output, event logs, and visual state MUST NOT become WikiVault canon without the governed provenance path."
+    severity: critical
+
+  - id: adapter-normalization
+    rule: "Provider/runtime-specific events MUST be normalized through a runtime adapter before entering canonical world-state resolution."
+    severity: high
+
+  - id: provider-failure-survival
+    rule: "The city MUST degrade gracefully and continue operating if an optional runtime/provider disappears, changes pricing, changes event format, or a trial ends."
+    severity: critical
+
+  - id: munder-position
+    rule: "Munder Difflin MAY contribute PTY session, mailbox, worktree, telemetry, task, cost, and breaker signals, but MUST NOT define Agentropolis authority, canon, districts, memory hierarchy, or visual law."
+    severity: high
+
+  - id: event-to-world-state
+    rule: "Raw runtime events MUST NOT control scene objects directly. A World-State Resolver MUST apply identity, mandate, district, policy, evaluation, thermodynamic, and audit semantics first."
+    severity: critical
+
+  - id: accessibility-parity
+    rule: "Operational meaning shown spatially SHOULD also be available through non-3D status/telemetry surfaces so critical state is never visible only as spectacle."
+    severity: medium
+
+canonical_pipeline:
+  - runtime_event_adapter
+  - agentropolis_event_bus
+  - world_state_resolver
+  - governed_surfaces
+
+canonical_surfaces:
+  - city_mode
+  - district_mode
+  - diorama_mode
+  - mission_mode
+  - cinematic_scroll_scrub_mode
+  - mission_control
+  - audit_views
