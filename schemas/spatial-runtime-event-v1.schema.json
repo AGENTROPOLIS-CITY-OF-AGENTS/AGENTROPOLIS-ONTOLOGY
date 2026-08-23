@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.example/schemas/spatial-runtime-event-v1.schema.json",
+  "title": "Agentropolis Spatial Runtime Event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "ts", "source", "entity", "event_type", "payload"],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "ts": {"type": "string", "format": "date-time"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapter_id", "runtime"],
+      "properties": {
+        "adapter_id": {"type": "string", "minLength": 1},
+        "runtime": {"type": "string", "minLength": 1},
+        "provider": {"type": ["string", "null"]},
+        "node_id": {"type": ["string", "null"]},
+        "session_id": {"type": ["string", "null"]}
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "entity_type"],
+      "properties": {
+        "entity_id": {"type": "string", "minLength": 1},
+        "entity_type": {
+          "type": "string",
+          "enum": ["city", "district", "facility", "agent_presence", "mission", "utility_link", "dispatch_link", "memory_link", "tool_endpoint", "mcp_endpoint", "evaluation_gate", "audit_endpoint", "quarantine_zone", "runtime_node"]
+        },
+        "district_id": {"type": ["string", "null"]},
+        "mission_id": {"type": ["string", "null"]},
+        "agent_id": {"type": ["string", "null"]}
+      }
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "agent.spawned", "agent.stopped", "task.assigned", "task.state_changed",
+        "tool.invoked", "mcp.invoked", "dispatch.sent", "dispatch.received",
+        "memory.read", "memory.write", "repo.worktree", "usage.sampled",
+        "error.retry", "loop.detected", "progress.stalled", "breaker.state_changed",
+        "human.approval_required", "evaluation.started", "evaluation.completed",
+        "receipt.produced", "audit.recorded"
+      ]
+    },
+    "mandate": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "mandate_id": {"type": "string"},
+        "authority_scope": {"type": "array", "items": {"type": "string"}},
+        "expires_at": {"type": ["string", "null"], "format": "date-time"}
+      }
+    },
+    "thermodynamics": {
+      "type": ["object", "null"],
+      "additionalProperties": true,
+      "properties": {
+        "state": {"type": "string", "enum": ["NORMAL", "DRIFT", "ENTROPY_RISING", "CONSTRAINED", "QUARANTINED", "HALTED"]}
+      }
+    },
+    "payload": {"type": "object", "additionalProperties": true},
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": true
+    }
+  }
+}
