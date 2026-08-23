@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.dev/schemas/thermodynamic-state-v1.schema.json",
+  "title": "AGENTROPOLIS Thermodynamic State v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subject", "observation_window", "energy_input", "compute_load", "value_output", "coordination_friction", "entropy", "drift", "stability", "telemetry_state"],
+  "properties": {
+    "subject": {"type": "string", "minLength": 1},
+    "observation_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": {"type": "string", "format": "date-time"},
+        "end": {"type": "string", "format": "date-time"}
+      }
+    },
+    "energy_input": {"type": "number", "minimum": 0},
+    "compute_load": {"type": "number", "minimum": 0},
+    "value_output": {"type": "number", "minimum": 0},
+    "coordination_friction": {"type": "number", "minimum": 0},
+    "entropy": {"type": "number", "minimum": 0},
+    "drift": {"type": "number", "minimum": 0},
+    "stability": {"type": "number", "minimum": 0},
+    "recovery_energy": {"type": "number", "minimum": 0},
+    "context_pressure": {"type": "number", "minimum": 0},
+    "capability_surface": {"type": "integer", "minimum": 0},
+    "baseline_id": {"type": ["string", "null"]},
+    "receipt_ids": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "telemetry_state": {
+      "type": "string",
+      "enum": ["CANONICAL_BASELINE", "SIMULATION", "RECEIPT_BACKED_OBSERVATION"]
+    },
+    "live_telemetry": {"type": "boolean"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"telemetry_state": {"const": "RECEIPT_BACKED_OBSERVATION"}}},
+      "then": {
+        "required": ["live_telemetry", "receipt_ids"],
+        "properties": {"live_telemetry": {"const": true}, "receipt_ids": {"minItems": 1}}
+      }
+    },
+    {
+      "if": {"properties": {"telemetry_state": {"enum": ["CANONICAL_BASELINE", "SIMULATION"]}}},
+      "then": {"properties": {"live_telemetry": {"const": false}}}
+    }
+  ]
+}
