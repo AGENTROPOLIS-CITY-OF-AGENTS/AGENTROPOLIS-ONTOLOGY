@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.dev/schemas/model-routing-v1.schema.json",
+  "title": "AGENTROPOLIS Model Routing v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["model", "provider", "lifecycle", "required_by_core", "replaceable", "evaluation", "assignment"],
+  "properties": {
+    "model": {"type": "string", "minLength": 1},
+    "provider": {"type": "string", "minLength": 1},
+    "provider_model_id": {"type": "string", "minLength": 1},
+    "lifecycle": {
+      "type": "string",
+      "enum": ["DISCOVERED", "CANDIDATE", "TRIAL", "EVALUATED", "APPROVED", "REJECTED", "PREFERRED", "DEGRADED", "RETIRED"]
+    },
+    "required_by_core": {"const": false},
+    "replaceable": {"const": true},
+    "fallback_required": {"type": "boolean"},
+    "post_trial_cost_status": {"type": "string"},
+    "capabilities": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority", "status"],
+      "properties": {
+        "authority": {"const": "BE"},
+        "status": {"type": "string", "enum": ["UNTESTED", "IN_PROGRESS", "PASS", "FAIL", "CONDITIONAL"]},
+        "receipt_id": {"type": "string"},
+        "evaluated_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "primary", "fallbacks"],
+      "properties": {
+        "scope": {"type": "string", "minLength": 1},
+        "primary": {"type": "boolean"},
+        "fallbacks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["model", "provider"],
+            "properties": {
+              "model": {"type": "string", "minLength": 1},
+              "provider": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "cost_ceiling": {"type": ["number", "null"], "minimum": 0},
+        "latency_ceiling_ms": {"type": ["integer", "null"], "minimum": 0},
+        "expires_at": {"type": ["string", "null"], "format": "date-time"}
+      }
+    }
+  }
+}

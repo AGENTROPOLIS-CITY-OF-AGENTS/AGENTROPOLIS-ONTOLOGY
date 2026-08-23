@@ -1,0 +1,68 @@
+version: 1
+status: active
+scope: AGENTROPOLIS
+
+core_law: "AGENTROPOLIS owns the intelligence architecture. Models and providers are replaceable cognitive resources."
+
+evaluation_authority: BE
+policy_authority: AEGIS
+containment_authority: 54-T
+operator_runtime: HERMES
+
+provider_invariants:
+  required_by_core: false
+  provider_lock_in_forbidden: true
+  model_lock_in_forbidden: true
+  provider_specific_memory_format_forbidden: true
+  provider_specific_canon_authority_forbidden: true
+  provider_specific_runtime_authority_forbidden: true
+  provider_outage_changes_canon: false
+
+model_invariants:
+  self_promotion_forbidden: true
+  self_certification_forbidden: true
+  direct_canon_write_forbidden: true
+  fallback_policy_required_for_variable_external_routes: true
+  historical_receipt_attribution_required: true
+  scoped_assignment_required: true
+  replaceable: true
+
+knowledge_boundaries:
+  wikivault: canonical_evidence_and_provenance
+  obsidian: human_editable_durable_knowledge
+  gbrain: derived_rebuildable_graph
+  jspace: derived_deliberation
+  hermes: orchestration_and_reasoning_surface
+  model: replaceable_inference_resource
+
+trial_policy:
+  lifecycle: TRIAL
+  required_by_core: false
+  fallback_required: true
+  be_evaluation_required_for_promotion: true
+  post_trial_economics_must_be_reviewed: true
+  trial_expiry_must_not_break_city: true
+
+examples:
+  - model: ox-alpha
+    provider: nous
+    provider_model_id: stealth/ox-alpha
+    lifecycle: TRIAL
+    required_by_core: false
+    replaceable: true
+    fallback_required: true
+    evaluation_authority: BE
+    post_trial_cost_status: unresolved
+  - model: nemotron
+    provider: nvidia
+    lifecycle: EVALUATED
+    required_by_core: false
+    replaceable: true
+
+hard_gates:
+  - no_invented_receipts
+  - no_silent_authority_expansion
+  - no_silent_canon_write
+  - no_model_output_as_evidence_without_provenance
+  - no_unresolved_critical_state_execution
+  - no_preview_or_baseline_telemetry_presented_as_live
