@@ -1,7 +1,7 @@
 # AGENTROPOLIS Spatial Runtime City Ontology
 
 Status: canonical platform contract
-Version: 1.0
+Version: 1.1
 
 ## Doctrine
 
@@ -38,7 +38,13 @@ The spatial runtime depends on canonical infrastructure services:
 
 ### Layer 2 — Districts / Institutions
 
-Districts own domain meaning and map governed activity into spatial entities:
+Districts own domain meaning and map governed activity into spatial entities.
+
+**CREATOR / Construction District** is the canonical spatial fabrication institution. It consumes resolved world state and compiles that state into renderer-neutral city form: terrain, facilities, utilities, routes, dioramas, scene instructions, camera plans, and deployment artifacts.
+
+Construction does not define authority or truth. It compiles governed state into spatial form.
+
+Minimum spatial entities include:
 
 - district
 - facility/building
@@ -65,6 +71,8 @@ The same world state can be consumed by multiple surfaces:
 
 No application surface is allowed to become the source of truth for runtime state.
 
+PERMS 3D, Three.js, WebGL, WebGPU, XR, and future renderers are renderer implementations beneath the Construction output contract. A renderer is replaceable and MUST NOT become the city model.
+
 ## Canonical data flow
 
 ```text
@@ -79,16 +87,19 @@ AGENTROPOLIS EVENT BUS
         v
 World-State Resolver
         |
+        v
+CREATOR / Construction District
+        |
         +------------------+------------------+
         |                  |                  |
         v                  v                  v
    3D City/Diorama    Mission Control     Audit Ledger
         |
         v
-Camera + Interaction Layer
+Renderer + Camera + Interaction Layer
 ```
 
-The adapter normalizes provider/runtime-specific events. The World-State Resolver applies Agentropolis identity, mandate, district, policy, evaluation, thermodynamic, and governance semantics before the renderer receives state.
+The adapter normalizes provider/runtime-specific events. The World-State Resolver applies Agentropolis identity, mandate, district, policy, evaluation, thermodynamic, and governance semantics. Construction compiles that resolved state into spatial instructions. The renderer displays those instructions.
 
 ## Runtime adapter contract
 
@@ -198,6 +209,36 @@ Possible visual channels:
 
 Visual intensity MUST be bounded and interpretable; cinematic spectacle cannot obscure operational meaning.
 
+## Construction District contract
+
+CREATOR / Construction District owns spatial compilation, including:
+
+- procedural terrain and parcels
+- district and facility fabrication
+- roads, transit, utility, memory, dispatch, MCP, evaluation, and audit routes
+- interiors and cutaways
+- quarantine and containment geometry
+- diorama composition
+- renderer-neutral scene instructions
+- LOD/performance hints
+- camera choreography and scroll-scrub scene plans
+
+Construction MAY transform resolved state into visual/spatial intent.
+
+Construction MUST NOT:
+
+- alter canonical world state directly
+- assign authority
+- expand a mandate
+- bypass AEGIS
+- redefine BE state
+- turn renderer state into evidence
+- make city semantics dependent on PERMS 3D or any other renderer
+
+Canonical rule:
+
+> The ontology says what exists. Construction builds its body. The renderer lets us see it.
+
 ## Diorama contract
 
 Diorama Mode is a scoped camera and scene-composition mode over canonical world state.
@@ -271,9 +312,10 @@ The city MUST remain operational when:
 - a model/provider changes price
 - a local node disappears
 - a CLI changes event format
-- a better runtime replaces the current one
+- PERMS 3D is replaced
+- a better runtime or renderer replaces the current one
 
-Adapters are replaceable. Canonical world state is not.
+Adapters and renderers are replaceable. Canonical world state is not.
 
 ## Operational invariant
 
