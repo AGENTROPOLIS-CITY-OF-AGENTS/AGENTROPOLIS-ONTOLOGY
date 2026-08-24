@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.example/schemas/harness-runtime-v1.schema.json",
+  "title": "AGENTROPOLIS Harness Runtime Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "harness_profile_id",
+    "base",
+    "provider",
+    "protocol",
+    "district_scope",
+    "tool_policy_ref",
+    "skill_policy_ref",
+    "memory_projection_ref",
+    "receipt_required",
+    "evaluation_owner",
+    "revocation_state"
+  ],
+  "properties": {
+    "harness_profile_id": {"type": "string", "minLength": 1},
+    "base": {"type": "string", "minLength": 1},
+    "provider": {"type": "string", "minLength": 1},
+    "protocol": {"type": "string", "minLength": 1},
+    "protocol_version": {"type": ["string", "null"]},
+    "conformance_class": {
+      "type": ["string", "null"],
+      "enum": [null, "core", "extended", "full"]
+    },
+    "conformance_state": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "candidate",
+        "approved",
+        "core-conformant",
+        "extended-conformant",
+        "full-conformant",
+        "suspended",
+        "revoked",
+        "retired"
+      ]
+    },
+    "default_model": {"type": ["string", "null"]},
+    "district_scope": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      ]
+    },
+    "system_instruction_ref": {"type": ["string", "null"]},
+    "tool_policy_ref": {"type": "string", "minLength": 1},
+    "skill_policy_ref": {"type": "string", "minLength": 1},
+    "mcp_policy_ref": {"type": ["string", "null"]},
+    "memory_projection_ref": {"type": "string", "minLength": 1},
+    "step_budget": {"type": ["integer", "null"], "minimum": 0},
+    "time_budget_seconds": {"type": ["integer", "null"], "minimum": 0},
+    "cost_budget": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["currency", "max"],
+      "properties": {
+        "currency": {"type": "string", "minLength": 1},
+        "max": {"type": "number", "minimum": 0}
+      }
+    },
+    "egress_policy": {"type": ["string", "null"]},
+    "receipt_required": {"type": "boolean", "const": true},
+    "evaluation_owner": {"type": "string", "const": "BE"},
+    "revocation_state": {
+      "type": "string",
+      "enum": ["active", "suspended", "revoked", "retired"]
+    }
+  }
+}
