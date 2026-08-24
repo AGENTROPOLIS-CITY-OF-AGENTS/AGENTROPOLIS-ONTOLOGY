@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.dev/schemas/district-knowledge-federation-v1.schema.json",
+  "title": "Agentropolis District Knowledge Federation",
+  "type": "object",
+  "required": ["schema_version", "city_namespace", "districts"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "city_namespace": {"type": "string", "minLength": 1},
+    "global_rollup": {
+      "type": "object",
+      "properties": {
+        "ontology_namespace": {"type": "string"},
+        "registry_namespace": {"type": "string"},
+        "provenance_index": {"type": "string"},
+        "cross_district_graph": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "districts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "ontology_namespace", "protocols", "knowledge", "memory_policy", "authority"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "ontology_namespace": {"type": "string", "minLength": 1},
+          "protocols": {"type": "array", "items": {"type": "string"}},
+          "policies": {"type": "array", "items": {"type": "string"}},
+          "knowledge": {
+            "type": "object",
+            "required": ["wiki_namespace", "vault_namespace", "llm_wiki_index", "gbrain_namespace"],
+            "properties": {
+              "wiki_namespace": {"type": "string"},
+              "vault_namespace": {"type": "string"},
+              "llm_wiki_index": {"type": "string"},
+              "gbrain_namespace": {"type": "string"},
+              "wikivault_namespace": {"type": "string"}
+            },
+            "additionalProperties": false
+          },
+          "memory_policy": {"type": "string"},
+          "skill_registry": {"type": "string"},
+          "model_policy": {"type": "string"},
+          "authority": {"type": "string"},
+          "cross_district_access": {
+            "type": "object",
+            "properties": {
+              "default": {"enum": ["deny", "dispatch-only", "read-bounded"]},
+              "resolver": {"type": "string"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
