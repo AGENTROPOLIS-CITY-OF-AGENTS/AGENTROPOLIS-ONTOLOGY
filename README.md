@@ -29,8 +29,12 @@ The Agentropolis 3D city is a governed spatial observability/control surface ove
 - **HERMES** — orchestration and reasoning surface
 - **Models** — replaceable inference resources
 
+Knowledge is hierarchical and federated: `CITY -> DISTRICT -> INSTITUTION/SYSTEM -> AGENT -> TASK`. Every district owns a bounded ontology, protocol, policy, memory, Skill, and knowledge namespace. The city maintains the constitutional shell and federated roll-up without flattening district vaults. Cross-district knowledge access routes through governed resolution and never grants authority by itself.
+
 ## Key ontology contracts
 
+- `docs/DISTRICT_KNOWLEDGE_FEDERATION_ONTOLOGY.md` — district-scoped intelligence inheritance, city roll-up, cross-district resolution, and anti-flattening law
+- `schemas/district-knowledge-federation-v1.schema.json` — machine-readable district knowledge federation contract
 - `docs/MODEL_PROVIDER_ONTOLOGY.md` — provider/model lifecycle, BE evaluation, scoped assignment, fallback and anti-lock-in law
 - `docs/THERMODYNAMIC_SYSTEM_ONTOLOGY.md` — energy input, compute load, value output, friction, entropy, drift, stability and recovery semantics
 - `docs/SPATIAL_RUNTIME_CITY_ONTOLOGY.md` — live 3D city, diorama, mission camera, scroll-scrub, runtime-adapter and world-state contracts
