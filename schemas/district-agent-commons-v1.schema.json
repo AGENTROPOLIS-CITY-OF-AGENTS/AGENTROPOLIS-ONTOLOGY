@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.local/schemas/district-agent-commons-v1.schema.json",
+  "title": "AGENTROPOLIS District Agent Commons Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "district_id",
+    "event_type",
+    "actor",
+    "authority",
+    "transport",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "event_id": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": ["string", "null"]},
+    "district_id": {"type": "string", "minLength": 1},
+    "target_district_id": {"type": ["string", "null"]},
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "agent.discovered",
+        "agent.present",
+        "agent.unavailable",
+        "coordination.requested",
+        "task.handoff.requested",
+        "task.handoff.accepted",
+        "memory.reference.shared",
+        "recruitment.requested",
+        "dispatch.cross_district.requested",
+        "dispatch.cross_district.accepted",
+        "coordination.receipt.created"
+      ]
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id"],
+      "properties": {
+        "agent_id": {"type": "string", "minLength": 1},
+        "role": {"type": ["string", "null"]},
+        "mandate_ref": {"type": ["string", "null"]}
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["communication_only", "execution_granted"],
+      "properties": {
+        "communication_only": {"const": true},
+        "execution_granted": {"const": false},
+        "required_corridor": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "Identity"},
+            {"const": "Mandate"},
+            {"const": "Policy"},
+            {"const": "Tool Permission"},
+            {"const": "Execution"},
+            {"const": "Receipt"},
+            {"const": "Audit"}
+          ],
+          "items": false,
+          "minItems": 7,
+          "maxItems": 7
+        }
+      }
+    },
+    "transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapter_class"],
+      "properties": {
+        "adapter_class": {
+          "type": "string",
+          "enum": ["hermes_group_chat", "buzz", "discord", "slack", "teams", "social_messaging", "terminal_hud", "machine_event", "other"]
+        },
+        "adapter_id": {"type": ["string", "null"]},
+        "conversation_ref": {"type": ["string", "null"]}
+      }
+    },
+    "payload": {"type": "object"},
+    "dispatch_required": {"type": "boolean", "default": false},
+    "receipt_required": {"type": "boolean", "default": false},
+    "memory_eligible": {"type": "boolean", "default": false},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}
