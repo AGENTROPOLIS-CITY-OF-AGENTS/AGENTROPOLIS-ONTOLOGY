@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.dev/schemas/execution-evaluation-v1.schema.json",
+  "title": "AGENTROPOLIS BE Execution Evaluation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evaluation_id",
+    "execution_id",
+    "evaluator",
+    "result",
+    "evidence",
+    "evaluated_at"
+  ],
+  "properties": {
+    "evaluation_id": { "type": "string", "minLength": 1 },
+    "execution_id": { "type": "string", "minLength": 1 },
+    "evaluator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "version"],
+      "properties": {
+        "system": { "const": "BE" },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "district": { "type": ["string", "null"] },
+    "application": { "type": ["string", "null"] },
+    "definition_of_done": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check_id", "kind", "status"],
+        "properties": {
+          "check_id": { "type": "string", "minLength": 1 },
+          "kind": {
+            "enum": [
+              "test",
+              "schema",
+              "contract",
+              "quality-threshold",
+              "evidence-comparison",
+              "policy-evidence",
+              "human-required"
+            ]
+          },
+          "status": { "enum": ["pass", "fail", "inconclusive"] },
+          "details": { "type": "string" }
+        }
+      }
+    },
+    "result": { "enum": ["pass", "fail", "escalate"] },
+    "next_action": {
+      "enum": ["accept", "repair", "retry", "human-review", "quarantine"]
+    },
+    "evidence": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "receipt_uri": { "type": ["string", "null"] },
+    "evaluated_at": { "type": "string", "format": "date-time" }
+  }
+}
