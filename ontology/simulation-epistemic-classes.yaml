@@ -1,0 +1,83 @@
+version: 0.1.0
+namespace: agentropolis.simulation
+
+entities:
+  Scenario:
+    description: Versioned counterfactual or forecasting experiment.
+    required_fields:
+      - scenario_id
+      - purpose
+      - decision_context
+      - time_horizon
+      - assumptions
+      - evidence_inputs
+      - routing_profile
+      - policy_state
+
+  SimulationRun:
+    description: Reproducible execution of a Scenario under a defined model and seed state.
+    required_fields:
+      - run_id
+      - scenario_id
+      - model_versions
+      - surrogate_versions
+      - seed_state
+      - compute_receipt
+
+  SyntheticAgentState:
+    description: State belonging to an agent that exists only within a simulation.
+    epistemic_type: synthetic_agent_state
+
+  SimulationOutcome:
+    description: Output generated from one or more SimulationRun entities.
+    epistemic_type: simulation_outcome
+    may_be_observed_fact: false
+
+  Forecast:
+    description: Calibrated statement about a possible future condition.
+    epistemic_type: forecast
+    may_be_observed_fact: false
+
+  CalibrationRecord:
+    description: Comparison between a prior forecast or simulation and later observed evidence.
+    epistemic_type: calibration_error
+
+  ObservedFact:
+    description: Claim supported by evidence external to the simulation.
+    epistemic_type: observed_fact
+
+  ModelAssumption:
+    description: Explicit assumption controlling scenario construction or transitions.
+    epistemic_type: model_assumption
+
+relationships:
+  scenario_uses_assumption:
+    from: Scenario
+    to: ModelAssumption
+  scenario_uses_evidence:
+    from: Scenario
+    to: ObservedFact
+  run_instantiates_scenario:
+    from: SimulationRun
+    to: Scenario
+  run_emits_agent_state:
+    from: SimulationRun
+    to: SyntheticAgentState
+  run_contributes_to_outcome:
+    from: SimulationRun
+    to: SimulationOutcome
+  outcome_supports_forecast:
+    from: SimulationOutcome
+    to: Forecast
+  calibration_compares_forecast:
+    from: CalibrationRecord
+    to: Forecast
+  calibration_compares_observation:
+    from: CalibrationRecord
+    to: ObservedFact
+
+invariants:
+  - simulation_outcome_cannot_be_retyped_as_observed_fact_without_new_external_evidence
+  - forecast_cannot_be_retyped_as_observed_fact_without_new_external_evidence
+  - retrieval_must_preserve_epistemic_type
+  - durable_memory_must_preserve_provenance_and_scenario_version
