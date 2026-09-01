@@ -1,0 +1,123 @@
+apiVersion: agentropolis.io/v1alpha1
+kind: UpstreamSkillPack
+metadata:
+  name: brooklyn-skills
+  owner: OutThisLife
+  status: reviewed
+spec:
+  source:
+    repository: https://github.com/OutThisLife/brooklyn-skills
+    commit: f60ab3b43f422309c74dff5ed7dc53af042c2908
+    license: MIT
+    update_policy: pinned-review-required
+  purpose: >-
+    Portable harness-agnostic SKILL.md workflows for coding-agent research,
+    isolated worktrees, PR hygiene, UI discipline, debugging, and verification.
+  precedence:
+    - AGENTROPOLIS Root Law
+    - Policy/Risk Layer
+    - 54-T containment
+    - AGENTIC STUDIOS BACK END governance
+    - district policy
+    - repository policy
+    - imported skill instructions
+  defaults_policy:
+    import_upstream_defaults_md: false
+    reason: >-
+      Upstream always-on defaults are useful reference material but must not
+      override AGENTROPOLIS governance or become global system instructions.
+  runtime:
+    registry_visibility: curated
+    production_default: disabled-until-adapter-enforced
+    provenance_required: true
+    action_receipts_required: true
+    secret_access: deny
+    raw_credentials_to_model: deny
+    network_access: deny-by-default
+    shell_access: deny-by-default
+    external_mutation: approval-gated
+    irreversible_action: dual-control-or-human-approval
+  curated_skills:
+    - name: research
+      path: skills/research/SKILL.md
+      activation: advisory
+      rationale: Evidence-first research and prior-art workflow.
+    - name: audit-only
+      path: skills/audit-only/SKILL.md
+      activation: advisory
+      rationale: Read-only investigation lane.
+    - name: work
+      path: skills/work/SKILL.md
+      activation: scoped-write
+      rationale: Isolated git worktree workflow for parallel agents.
+      required_controls:
+        - scoped-filesystem
+        - scoped-git
+        - no-other-agent-worktree
+    - name: clean
+      path: skills/clean/SKILL.md
+      activation: scoped-write
+      rationale: Cleanup pass before handoff.
+    - name: pr-triage
+      path: skills/pr-triage/SKILL.md
+      activation: approval-gated
+      rationale: Review and classify pull-request work.
+    - name: pr-ready
+      path: skills/pr-ready/SKILL.md
+      activation: approval-gated
+      rationale: Rebase, CI, and review-thread remediation.
+      required_controls:
+        - scoped-git
+        - scoped-github
+        - force-with-lease-only
+        - no-unrelated-feature-work
+    - name: pr-update
+      path: skills/pr-update/SKILL.md
+      activation: approval-gated
+      rationale: Structured PR handoff and update workflow.
+    - name: cpr
+      path: skills/cpr/SKILL.md
+      activation: approval-gated
+      rationale: Combined clean plus PR update handoff.
+    - name: ui-only
+      path: skills/ui-only/SKILL.md
+      activation: scoped-write
+      rationale: Constrain UI iteration before expensive validation/handoff steps.
+    - name: ui-system
+      path: skills/ui-system/SKILL.md
+      activation: advisory
+      rationale: Reuse existing design-system primitives.
+    - name: visual-verify
+      path: skills/visual-verify/SKILL.md
+      activation: advisory
+      rationale: Require rendered-surface verification before declaring visual work done.
+    - name: runtime-debug
+      path: skills/runtime-debug/SKILL.md
+      activation: scoped-write
+      rationale: Observability-first runtime debugging.
+  deferred_skills:
+    - name: free-disk-space
+      reason: Machine-state mutation requires separate device-hardening review.
+    - name: notarize-mac
+      reason: Platform signing and credential use require dedicated secret/codesign policy.
+    - name: draft-tweet
+      reason: Social publishing workflows belong behind Social Ingest/Council policy.
+    - name: ticket-ship
+      reason: External tracker mutation requires connector-specific approval controls.
+    - name: perf
+      reason: Evaluate separately against current benchmark and execution policy.
+    - name: no-tropes
+      reason: Editorial preference; not needed for initial coding-agent control plane.
+  supported_harness_targets:
+    - hermes
+    - codex-compatible
+    - claude-code-compatible
+    - cursor-compatible
+    - opencode-compatible
+  notes:
+    - >-
+      Hermes may mount an external skills directory, but runtime configuration is
+      implementation work outside ONTOLOGY and must preserve the pinned/reviewed boundary.
+    - >-
+      Provider adapters should expose common AGENTROPOLIS skill identifiers rather
+      than making workflow semantics dependent on a single model vendor.
