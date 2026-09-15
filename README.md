@@ -1,6 +1,6 @@
 # AGENTROPOLIS-ONTOLOGY
 
-Open ontology for Agentropolis: districts, agents, skills, memory, policies, workflows, permissions, events, registries, audit models, model/provider routing, harness/runtime routing, thermodynamic system state, entropy, drift, stability, spatial world state, governed 3D city surfaces, and governed knowledge boundaries for accountable AI ecosystems.
+Open ontology for Agentropolis: districts, agents, skills, memory, policies, workflows, permissions, events, registries, audit models, model/provider routing, harness/runtime routing, thermodynamic system state, entropy, drift, stability, spatial world state, governed 3D city surfaces, constitutional governance, and governed knowledge boundaries for accountable AI ecosystems.
 
 ## Core doctrine
 
@@ -20,6 +20,13 @@ Harness != Memory
 Harness Session != Sovereign Memory
 Runtime != City
 Renderer != Truth
+SOUL != Authority
+Role != Authority
+Persona != Authority
+Context != Authority
+Communication != Authority
+Tool Availability != Permission
+Retrieval Access != Permission
 ```
 
 System-wide model and harness evaluation belongs to **BE**. AEGIS governs policy boundaries, 54-T verifies containment/effective capability, and HERMES consumes approved routes. ASBE remains scoped to the Entertainment District.
@@ -27,6 +34,23 @@ System-wide model and harness evaluation belongs to **BE**. AEGIS governs policy
 Hermes is the preferred/native AGENTROPOLIS harness, but it is not a hard architectural dependency. Dispatch may route approved tasks to other governed harnesses when policy, capability, privacy, cost, or task-level CBA justifies it.
 
 The Agentropolis 3D city is a governed spatial observability/control surface over canonical world state. Dioramas, district views, mission views, and cinematic scroll-scrub experiences are lenses over that same state rather than independent simulations.
+
+## Constitutional inheritance
+
+The ontology inherits constitutional doctrine from `AGENTROPOLIS-FOUNDING-PAPERS` and does not independently mint constitutional authority.
+
+```text
+FOUNDING PAPERS
+  -> CITY CONSTITUTION
+  -> CONSTITUTIONAL ONTOLOGY
+  -> DISTRICT CHARTER
+  -> AGENT CONSTITUTION / SOUL
+  -> ROLE
+  -> MANDATE
+  -> EXECUTION ENVELOPE
+```
+
+Constitutional artifacts may constrain behavior and judgment. They may not enlarge machine-enforced authority.
 
 ## Knowledge boundaries
 
@@ -42,6 +66,8 @@ Knowledge is hierarchical and federated: `CITY -> DISTRICT -> INSTITUTION/SYSTEM
 
 ## Key ontology contracts
 
+- `docs/CONSTITUTIONAL_GOVERNANCE_ONTOLOGY.md` — Constitution, Charter, SOUL, Role, Mandate, amendment, authority-reference, and constitutional-drift semantics
+- `governance/constitutional-governance-invariants.yaml` — hard constitutional inheritance and anti-authority-drift invariants
 - `docs/DISTRICT_KNOWLEDGE_FEDERATION_ONTOLOGY.md` — district-scoped intelligence inheritance, city roll-up, cross-district resolution, and anti-flattening law
 - `schemas/district-knowledge-federation-v1.schema.json` — machine-readable district knowledge federation contract
 - `docs/MODEL_PROVIDER_ONTOLOGY.md` — provider/model lifecycle, BE evaluation, scoped assignment, fallback and anti-lock-in law
