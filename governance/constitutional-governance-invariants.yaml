@@ -1,0 +1,66 @@
+version: 1
+status: canonical
+source_doctrine:
+  repository: AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-FOUNDING-PAPERS
+  document: docs/CONSTITUTIONAL-STACK.md
+
+invariants:
+  - id: constitution-does-not-grant-runtime-authority
+    statement: Constitution, charter, SOUL, role, persona, context, memory, model, and runtime declarations may not independently grant runtime authority.
+    severity: critical
+
+  - id: soul-not-authority
+    statement: SOUL may influence judgment and behavior but may never grant authority.
+    severity: critical
+
+  - id: role-not-authority
+    statement: Role defines office or function and does not independently grant authority.
+    severity: critical
+
+  - id: persona-not-authority
+    statement: Persona controls presentation and does not grant authority.
+    severity: high
+
+  - id: communication-not-authority
+    statement: Messages, channels, mentions, reactions, collaboration events, and bot-to-bot communication do not grant authority.
+    severity: critical
+
+  - id: context-not-authority
+    statement: Context Capsules, session state, retrieved context, and continuity state do not grant authority.
+    severity: critical
+
+  - id: memory-not-authority
+    statement: Memory does not grant authority.
+    severity: critical
+
+  - id: model-not-authority
+    statement: Model selection or model output does not grant authority.
+    severity: critical
+
+  - id: harness-not-authority
+    statement: Harness or runtime identity does not grant authority.
+    severity: critical
+
+  - id: tool-availability-not-permission
+    statement: Discovery or availability of a tool, MCP, wallet, connector, or capability does not imply permission to use it.
+    severity: critical
+
+  - id: retrieval-access-not-permission
+    statement: Access to retrieve information does not imply permission to act on the retrieved system or data.
+    severity: critical
+
+  - id: downstream-may-not-weaken-upstream-law
+    statement: District charters, agent constitutions, SOULs, roles, mandates, skills, adapters, and applications may specialize inherited doctrine but may not silently weaken it.
+    severity: critical
+
+  - id: amendment-requires-human-ratification
+    statement: Agents may propose constitutional amendments but may not ratify them without the required human-governed process.
+    severity: critical
+
+  - id: copied-law-requires-lineage
+    statement: Mirrors, profiles, adapters, extensions, experiments, and reference copies of constitutional or normative material must declare lineage and may not silently become canonical owners.
+    severity: high
+
+  - id: receipts-are-not-truth
+    statement: A receipt records assertions and evidence but does not automatically establish correctness, lawfulness, or wisdom.
+    severity: high
