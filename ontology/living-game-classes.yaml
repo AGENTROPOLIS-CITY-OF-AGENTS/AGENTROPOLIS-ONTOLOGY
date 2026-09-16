@@ -1,0 +1,141 @@
+version: 0.1.0
+namespace: agentropolis.living_game
+status: draft
+purpose: >
+  Semantic registration of the project-, franchise-, chain-, device-, platform-, model-, and
+  rules-engine-agnostic Living Game Protocol. This file names classes and their relations. It does
+  not define runtime schemas, an execution envelope, or any runtime authority.
+
+canonical_sources:
+  protocol: https://github.com/AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-GAMING-DISTRICT/blob/main/docs/LIVING-GAME-PROTOCOL.md
+  schemas:
+    living_game_object: https://agentropolis.dev/schemas/living-game-object-v1.schema.json
+    live_reality_session: https://agentropolis.dev/schemas/live-reality-session-v1.schema.json
+  execution_envelope:
+    owner: AGENTROPOLIS-ATG
+    id: https://agentropolis.dev/atg/contracts/core/execution-envelope.schema.json
+    note: "The only Execution Envelope. Ontology references it; it never mints or mirrors one."
+  living_game_profile: https://agentropolis.dev/atg/contracts/profiles/living-game-extension.schema.json
+
+entities:
+  LivingGameObject:
+    description: A physical or digital TCG/tabletop object with verified identity, gameplay traits, permissions, and explicit interoperability adapters.
+    schema: https://agentropolis.dev/schemas/living-game-object-v1.schema.json
+    authority_owner: gaming-district-registry
+    epistemic_type: registered_object
+    object_types: [card, deck, character, item, miniature, token, terrain, book, location, artifact]
+    relations:
+      authenticated_by: PhysicalAuthenticator
+      adapted_through: InteroperabilityAdapter
+      transitions_proposed_by: QuestTrigger
+      owned_by: Principal
+
+  PhysicalAuthenticator:
+    description: NFC tag, QR code, or managed installation that produces discovery or verification evidence for a LivingGameObject.
+    authority_owner: utility-grid
+    epistemic_type: evidence_source
+    assurance_tiers: [discovery, verified, high_assurance, managed_installation]
+    produces: Evidence
+    grants_authority: false
+    may_transfer_value_or_ownership: false
+    payload_may_contain: [signed_public_route, opaque_identifier]
+    payload_must_not_contain: [wallet_secret, bearer_credential, unpublished_reward_value, self_authorizing_instruction]
+
+  QuestTrigger:
+    description: A condition that proposes a game-state transition; the authoritative rules engine verifies it.
+    authority_owner: gaming-district
+    epistemic_type: proposal
+    types: [nfc, qr, location, image, object, gesture, audio, card_play, game_result, social_event, broadcast_event, agent_interaction, wallet_proof, ar_anchor, vr_location]
+    requires_accessibility_alternative_for: [nfc, qr, location, image, object, gesture, audio, ar_anchor, vr_location, wallet_proof]
+    grants_authority: false
+    consequential_effects_require: ExecutionEnvelope
+
+  DeviceCapability:
+    description: Abstract, brand-neutral capability a device offers to a LiveRealitySession.
+    authority_owner: utility-grid
+    epistemic_type: capability_declaration
+    values: [photo, video_stream, microphone, speakers, display_2d, display_spatial, head_pose, hand_tracking, eye_tracking, voice_input, touch_input, controller_input, depth, anchors, location, heading, nfc, qr_scan]
+    device_classes: [ar_glasses, vr_headset, phone, tablet, browser, webcam, capture_card, mock, other]
+    brand_names_permitted: false
+    connectivity_grants_authority: false
+
+  LiveRealitySession:
+    description: AR/VR/phone/browser live capture session with privacy posture, negotiated capabilities, destinations, and state.
+    schema: https://agentropolis.dev/schemas/live-reality-session-v1.schema.json
+    authority_owner: utility-grid
+    epistemic_type: runtime_session
+    modes: [private_vision, preview, party, public, director, evidence, replay]
+    states: [draft, preview, awaiting_approval, live, paused, ended, sealed, denied]
+    privacy_defaults:
+      rawFrameRetention: ephemeral
+      locationMode: hidden
+      faceRecognition: false
+      publicBroadcastAuthorized: false
+    face_recognition_permitted: false
+    public_egress_requires: [publicBroadcastAuthorized, ExecutionEnvelope, BroadcastLease]
+    relations:
+      routes_to: BroadcastDestination
+      leased_under: BroadcastLease
+      uses: DeviceCapability
+
+  BroadcastDestination:
+    description: OBS-compatible egress target for a LiveRealitySession.
+    authority_owner: utility-grid
+    epistemic_type: routing_target
+    protocols: [rtmps, srt, webrtc, whip, whep, hls, ndi, virtual_camera, local_recording]
+    layouts: [landscape, portrait, square, spatial]
+    credentials_by: secret_reference
+    raw_credentials_permitted: false
+
+  BroadcastLease:
+    description: Renewable, time-boxed permission to broadcast, bound to one Execution Envelope and metered by Utility Grid.
+    authority_owner: utility-grid
+    epistemic_type: bounded_permission
+    unbounded_duration_permitted: false
+    bound_to: ExecutionEnvelope
+
+  HumanSignalEntity:
+    description: A real-world influencer who has docked approved accounts through AGENTROPOLIS Dock with proven ownership and explicit import/publishing scopes.
+    authority_owner: socials-influencer-dock
+    epistemic_type: consented_identity
+    may_become: SignalMagnet
+    docking_implies_platform_data_ownership: false
+    prohibited: [password_collection, private_message_import_by_default, follower_harvesting, artificial_engagement, unauthorized_likeness_cloning, publishing_without_mandate]
+    popularity_grants_authority: false
+
+  SignalMagnet:
+    description: A qualified HumanSignalEntity with elevated reach; reach never expands authority.
+    authority_owner: socials-influencer-dock
+    epistemic_type: consented_identity
+    reach_grants_authority: false
+
+  InteroperabilityAdapter:
+    description: Explicit, target-game-owned translation of a LivingGameObject into another system with a balance policy, permitted traits, and prohibited effects.
+    authority_owner: target-game-rules-engine
+    epistemic_type: translation_contract
+    implicit_interoperability_permitted: false
+    output_is_authoritative: false
+    fields: [targetSystem, balancePolicy, permittedTraits, prohibitedEffects]
+
+  Evidence:
+    description: An observation (tap, scan, frame, model output, social event, device connection) that may motivate a mandate but never authorizes.
+    authority_owner: none
+    epistemic_type: observation
+    may_be_authority: false
+    grants_authority: false
+
+  ExecutionEnvelope:
+    description: Reference to the single canonical ATG Execution Envelope. Not defined here.
+    authority_owner: atg
+    epistemic_type: external_reference
+    schema: https://agentropolis.dev/atg/contracts/core/execution-envelope.schema.json
+    defined_in_this_ontology: false
+
+boundaries:
+  gaming-district: [protocol, canonical_schemas, games, campaigns, tournaments, quests, registry]
+  utility-grid: [nfc_registry, device_routing, metering, broadcast_leases, receipts]
+  atg: [mandates, risk, execution_envelope, approval]
+  creator-core: [runtime_interfaces, authoring, publishing_pipelines]
+  botbae: [conversational_operations_least_privilege]
+  neuro: [observation, advisory_only]
+  ontology: [semantics_only]

@@ -1,0 +1,73 @@
+version: 1
+name: agentropolis-living-game-invariants
+status: draft
+source: https://github.com/AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-GAMING-DISTRICT/blob/main/docs/LIVING-GAME-PROTOCOL.md
+
+invariants:
+  - id: observation-is-evidence
+    rule: "Model observations, NFC taps, QR scans, camera access, wallet connections, popularity, social messages, device connectivity, and discovered tools are evidence and MUST NOT grant permission or authority."
+    severity: critical
+
+  - id: consequential-requires-envelope
+    rule: "Valuable rewards, access changes, publishing, ownership transfer, and settlement MUST carry an ATG mandate and the single canonical Execution Envelope."
+    severity: critical
+
+  - id: single-execution-envelope
+    rule: "No repository, profile, ontology, or runtime may define, mirror, or mint a second Execution Envelope. Living Game semantics travel as an extension of the ATG envelope."
+    severity: critical
+
+  - id: game-authority
+    rule: "Games retain authority over rules and balance. Interoperability requires an explicit target-game-owned InteroperabilityAdapter; adapter output is never authoritative."
+    severity: critical
+
+  - id: no-tap-to-spend
+    rule: "No NFC tap, scan, or gesture may automatically transfer money, assets, access, or ownership."
+    severity: critical
+
+  - id: nfc-assurance
+    rule: "Static NFC supports low-risk discovery only. High-value claims REQUIRE dynamic authentication, server challenges, session binding, replay detection, sequence checks, and rate limits."
+    severity: critical
+
+  - id: nfc-payload-hygiene
+    rule: "NFC payloads MUST contain only signed public routes or opaque identifiers; never wallet secrets, bearer credentials, unpublished reward values, or self-authorizing instructions."
+    severity: critical
+
+  - id: no-face-recognition
+    rule: "Face recognition is prohibited in every LiveRealitySession and every derived artifact."
+    severity: critical
+
+  - id: raw-frames-ephemeral
+    rule: "Raw wearable/camera frames are ephemeral by default; retention beyond receipt_only requires explicit user choice."
+    severity: high
+
+  - id: no-silent-public-broadcast
+    rule: "Public egress REQUIRES explicit publicBroadcastAuthorized, a verified Execution Envelope, and a renewable Utility Grid BroadcastLease. Sessions never become live silently."
+    severity: critical
+
+  - id: brand-neutral-devices
+    rule: "Applications request abstract DeviceCapability values, never device brands, SDKs, or vendors."
+    severity: high
+
+  - id: accessibility-alternatives
+    rule: "Physical, spatial, gesture, audio, and wallet triggers MUST declare accessibility alternatives; gameplay MUST NOT require a wallet at every step."
+    severity: high
+
+  - id: receipts-required
+    rule: "Every consequential Living Game action emits a receipt; denials are receipted as first-class outcomes."
+    severity: high
+
+  - id: human-signal-consent
+    rule: "A HumanSignalEntity exists only through proven account ownership and explicit scopes; docking never implies ownership of platform data and popularity never expands authority."
+    severity: critical
+
+  - id: neuro-advisory-only
+    rule: "NEURO observation is advisory and MUST NOT activate capture, publish, identify people, grant access, award value, or execute financial actions."
+    severity: critical
+
+  - id: governed-runtime-only
+    rule: "Living Game runtimes execute inside governed AGENTROPOLIS boundaries (Hermes, NemoClaw/Nemotron). OpenClaw and other ungoverned harnesses are not permitted hosts."
+    severity: high
+
+  - id: franchise-neutral
+    rule: "The shared Living Game model carries no franchise-, project-, chain-, or platform-specific lore or identifiers."
+    severity: high
