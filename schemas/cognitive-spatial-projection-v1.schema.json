@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.example/schemas/cognitive-spatial-projection-v1.schema.json",
+  "title": "AGENTROPOLIS Cognitive Spatial Projection v1",
+  "type": "object",
+  "required": ["schema", "authority", "source", "sourceRevision", "generatedAt", "nodes", "edges"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "agentropolis.cognitive-spatial-projection.v1" },
+    "authority": { "const": "DERIVED_READ_ONLY_PROJECTION" },
+    "source": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "sourceRevision": { "type": "string", "maxLength": 180 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["engine", "derivation"],
+      "properties": {
+        "engine": { "type": "string", "enum": ["graphify", "wikivault", "native", "other"] },
+        "version": { "type": "string", "maxLength": 120 },
+        "derivation": { "type": "string", "enum": ["EXTRACTED", "INFERRED", "AMBIGUOUS", "NATIVE", "MIXED"] }
+      }
+    },
+    "thermodynamics": { "$ref": "#/$defs/thermodynamics" },
+    "nodes": {
+      "type": "array",
+      "maxItems": 500,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "maxItems": 1500,
+      "items": { "$ref": "#/$defs/edge" }
+    }
+  },
+  "$defs": {
+    "unit": { "type": "number", "minimum": 0, "maximum": 1 },
+    "thermodynamics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "energyInput": { "type": "number", "minimum": 0 },
+        "computeLoad": { "type": "number", "minimum": 0 },
+        "valueOutput": { "type": "number", "minimum": 0 },
+        "coordinationFriction": { "type": "number", "minimum": 0 },
+        "entropy": { "$ref": "#/$defs/unit" },
+        "drift": { "$ref": "#/$defs/unit" },
+        "stability": { "$ref": "#/$defs/unit" },
+        "recoveryEnergy": { "type": "number", "minimum": 0 },
+        "contextPressure": { "$ref": "#/$defs/unit" },
+        "capabilitySurface": { "$ref": "#/$defs/unit" },
+        "state": {
+          "type": "string",
+          "enum": ["NORMAL", "DRIFT", "ENTROPY_RISING", "CONSTRAINED", "QUARANTINED", "HALTED", "UNKNOWN"]
+        },
+        "observationWindow": { "type": "string", "maxLength": 180 },
+        "source": { "type": "string", "maxLength": 180 }
+      }
+    },
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engine": { "type": "string", "enum": ["graphify", "wikivault", "native", "other"] },
+        "version": { "type": "string", "maxLength": 120 },
+        "derivation": { "type": "string", "enum": ["EXTRACTED", "INFERRED", "AMBIGUOUS", "NATIVE", "MIXED"] }
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "type", "layer", "title", "evidenceState", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 180 },
+        "type": {
+          "type": "string",
+          "enum": ["note", "evidence", "claim", "entity", "decision", "challenge", "task", "canon", "relationship", "artifact", "memory"]
+        },
+        "layer": {
+          "type": "string",
+          "enum": ["evidence", "human_editable", "retrieval", "ontology", "cognition", "governance"]
+        },
+        "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "summary": { "type": "string", "maxLength": 1200 },
+        "namespace": { "type": "string", "maxLength": 180 },
+        "evidenceState": {
+          "type": "string",
+          "enum": ["PLANNED", "IMPLEMENTED", "DEPLOYED", "OBSERVED", "VERIFIED", "UNVERIFIED"]
+        },
+        "verificationState": { "type": "string", "maxLength": 64 },
+        "challengeState": { "type": "string", "maxLength": 64 },
+        "confidence": { "$ref": "#/$defs/unit" },
+        "torque": { "$ref": "#/$defs/unit" },
+        "sourceUri": { "type": "string", "maxLength": 500 },
+        "sourceRef": { "type": "string", "maxLength": 240 },
+        "provenanceHash": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "maxLength": 64 },
+        "scope": { "type": "string", "enum": ["DEFAULT", "ARCHIVE", "REVIEW"] },
+        "tags": {
+          "type": "array",
+          "maxItems": 24,
+          "items": { "type": "string", "maxLength": 80 }
+        },
+        "compiler": { "$ref": "#/$defs/compiler" },
+        "thermodynamics": { "$ref": "#/$defs/thermodynamics" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": ["id", "from", "to", "relation"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 180 },
+        "from": { "type": "string", "minLength": 1, "maxLength": 180 },
+        "to": { "type": "string", "minLength": 1, "maxLength": 180 },
+        "relation": { "type": "string", "maxLength": 80 },
+        "weight": { "$ref": "#/$defs/unit" },
+        "confidence": { "$ref": "#/$defs/unit" },
+        "derivation": { "type": "string", "enum": ["EXTRACTED", "INFERRED", "AMBIGUOUS", "NATIVE", "MIXED"] },
+        "sourceUri": { "type": "string", "maxLength": 500 },
+        "sourceRef": { "type": "string", "maxLength": 240 },
+        "provenanceHash": { "type": "string", "maxLength": 128 }
+      }
+    }
+  }
+}
