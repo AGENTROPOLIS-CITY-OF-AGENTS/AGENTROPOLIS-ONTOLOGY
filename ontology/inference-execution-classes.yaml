@@ -1,0 +1,115 @@
+version: "0.1.0"
+namespace: agentropolis.ontology.inference_execution
+owner: AGENTROPOLIS-ONTOLOGY
+
+classes:
+  InferenceExecutionProfile:
+    description: >-
+      A versioned evidence-backed description of how an eligible model artifact may be
+      executed on a defined hardware class. It is descriptive evidence, not authority.
+    properties:
+      - model_artifact
+      - runtime
+      - quantization_profile
+      - hardware_profile
+      - placement_plan
+      - context_profile
+      - observed_performance
+      - observed_resource_use
+      - quality_evidence
+      - provenance
+      - promotion_state
+
+  HardwareProfile:
+    description: A measured device and host resource profile used for compute eligibility.
+    properties:
+      - gpu_model
+      - vram
+      - cpu_class
+      - host_ram
+      - storage_class
+      - power_limits
+      - thermal_limits
+
+  HeterogeneousPlacementPlan:
+    description: >-
+      A runtime-specific mapping of model components across GPU, CPU RAM, storage, or
+      other approved execution resources.
+    properties:
+      - gpu_resident_components
+      - cpu_resident_components
+      - streamed_components
+      - dynamic_migration
+      - runtime_constraints
+
+  DenseFeedbackObservation:
+    description: >-
+      Attributable execution evidence emitted by a governed run for use by Quantization
+      Torque, BE, receipts, and audit.
+    properties:
+      - execution_id
+      - context_depth
+      - ttft
+      - prefill_throughput
+      - decode_throughput
+      - speculative_acceptance
+      - vram_usage
+      - host_ram_usage
+      - storage_behavior
+      - power
+      - temperature
+      - throttling
+      - concurrency
+      - failure_events
+      - quality_evidence_ref
+
+  QuantizationTorqueDecision:
+    description: >-
+      A bounded allocation decision that selects minimum sufficient cognition and compute
+      within preserved mandate, policy, quality, locality, provenance, and safety invariants.
+    properties:
+      - candidate_profiles
+      - selected_profile
+      - adjustment_surface
+      - preserved_invariants
+      - evidence_refs
+      - reason_code
+
+relationships:
+  - subject: InferenceExecutionProfile
+    predicate: requires
+    object: HardwareProfile
+  - subject: InferenceExecutionProfile
+    predicate: may_use
+    object: HeterogeneousPlacementPlan
+  - subject: DenseFeedbackObservation
+    predicate: observed_from
+    object: InferenceExecutionProfile
+  - subject: QuantizationTorqueDecision
+    predicate: consumes
+    object: DenseFeedbackObservation
+  - subject: QuantizationTorqueDecision
+    predicate: selects
+    object: InferenceExecutionProfile
+
+constraints:
+  - "InferenceExecutionProfile MUST NOT be treated as execution authority."
+  - "Repository or vendor benchmarks MUST be represented as evidence scoped to their measured hardware/profile."
+  - "A profile promoted for one hardware class MUST NOT be assumed production-eligible on a materially different class without a new benchmark receipt."
+  - "QuantizationTorqueDecision MUST preserve mandate, policy, locality, quality, provenance, safety, and approval invariants."
+  - "DenseFeedbackObservation MUST distinguish measured values from inferred or declared values."
+
+example_instances:
+  qwen38_flashnext_exl3_b250_rtx3090:
+    class: InferenceExecutionProfile
+    model_artifact: r0b0tlab/Qwen3.8-Flash-Next-EXL3-2.50bpw
+    runtime: ExLlamaV3
+    hardware_profile:
+      gpu_model: RTX 3090
+      vram_gb: 24
+      host_ram_gb: 59
+    placement_plan:
+      gpu_resident_components: [hot_experts, attention, kv_cache, mtp, vision]
+      cpu_resident_components: [routed_expert_tail]
+      streamed_components: [ngram_table]
+    promotion_state: candidate-evidence
