@@ -1,0 +1,267 @@
+# Provisional APS Candidate Registry
+# Candidate IDs are NOT APS numbers.
+# Snapshot scope: active public repositories visible through the installed GitHub connections.
+snapshot_date: "2026-10-05"
+candidate_count: 42
+spaces:
+  AGENTROPOLIS-CITY-OF-AGENTS: 35
+  wiredchaos: 7
+maturity_levels:
+  C0: DISCOVERY
+  C1: CANDIDATE
+  C2: DRAFTABLE
+  C3: STANDARDS_READY
+  C4: EXTERNAL_CANDIDATE
+candidates:
+  - candidate_id: CAND-0001
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOCALYPSE"
+    maturity: C0
+    status: candidate
+    note: "game/world implementation; reusable primitive not yet isolated"
+    external_target: TBD
+  - candidate_id: CAND-0002
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-33.3FM"
+    maturity: C1
+    status: candidate
+    note: "creator rights, distribution and NFT-adjacent workflow behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0003
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-33.3FM-DOGECHAIN"
+    maturity: C0
+    status: candidate
+    note: "chain-specific implementation; standardizable boundary not yet isolated"
+    external_target: TBD
+  - candidate_id: CAND-0004
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-54GHOSTS"
+    maturity: C0
+    status: candidate
+    note: "public implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0005
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-54GHOSTs2"
+    maturity: C0
+    status: candidate
+    note: "public implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0006
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-AGENT-MCP"
+    maturity: C2
+    status: candidate
+    note: "governed MCP capability membrane and adaptive-assistant standard material exist"
+    external_target: TBD
+  - candidate_id: CAND-0007
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-AI-OPS"
+    maturity: C1
+    status: candidate
+    note: "runtime telemetry, model routing, context, cost and agent performance behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0008
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-ASIMOV"
+    maturity: C1
+    status: candidate
+    note: "physical-agent and robotics governance behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0009
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-ATG"
+    maturity: C2
+    status: candidate
+    note: "canonical agentic language and semantic contract already spans core primitives"
+    external_target: TBD
+  - candidate_id: CAND-0010
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-ATLAS"
+    maturity: C1
+    status: candidate
+    note: "spatial intelligence, provenance and evidence behaviors identified"
+    external_target: TBD
+  - candidate_id: CAND-0011
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-BUZZ"
+    maturity: C1
+    status: candidate
+    note: "identity, reputation, memory, evidence and coordination behaviors identified"
+    external_target: TBD
+  - candidate_id: CAND-0012
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-CAPITAL-ATLAS"
+    maturity: C0
+    status: candidate
+    note: "capital/opportunity implementation requires primitive isolation"
+    external_target: TBD
+  - candidate_id: CAND-0013
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-CHAOS-RANK"
+    maturity: C1
+    status: candidate
+    note: "evidence/skill/audit ranking behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0014
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-EPD"
+    maturity: C1
+    status: candidate
+    note: "publishing provenance, rights, governance and distribution behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0015
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-FIN54"
+    maturity: C1
+    status: candidate
+    note: "structured financial intelligence/evidence service behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0016
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-GAMING-DISTRICT-NEURO-ON-CHAIN"
+    maturity: C0
+    status: candidate
+    note: "game implementation; reusable standard not yet isolated"
+    external_target: TBD
+  - candidate_id: CAND-0017
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-GAMING-DISTRICT-NKTO2020-KILO-BUILD"
+    maturity: C0
+    status: candidate
+    note: "game build; reusable standard not yet isolated"
+    external_target: TBD
+  - candidate_id: CAND-0018
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-GREENRAIL-"
+    maturity: C0
+    status: candidate
+    note: "implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0019
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-GREENRAILS"
+    maturity: C1
+    status: candidate
+    note: "AI-assisted public-goods funding decision rail behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0020
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-GooGle-backend"
+    maturity: C0
+    status: candidate
+    note: "generic backend/application material; reusable primitive not yet isolated"
+    external_target: TBD
+  - candidate_id: CAND-0021
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-HERMES-ANDROID"
+    maturity: C1
+    status: candidate
+    note: "mobile operator console for sessions, skills, memory, tasks and approvals"
+    external_target: TBD
+  - candidate_id: CAND-0022
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-MRKT-CMD"
+    maturity: C1
+    status: candidate
+    note: "market-command capability, evidence, receipt and audit behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0023
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-N3"
+    maturity: C0
+    status: candidate
+    note: "public implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0024
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-OFFGRID-PUB"
+    maturity: C1
+    status: candidate
+    note: "offline/sovereign node protocol and contract material identified"
+    external_target: TBD
+  - candidate_id: CAND-0025
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-ONTOLOGY"
+    maturity: C2
+    status: candidate
+    note: "open canonical ontology with policy, capability, routing, evidence and audit semantics"
+    external_target: TBD
+  - candidate_id: CAND-0026
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-PAY-PROTOCOL"
+    maturity: C3
+    status: candidate
+    note: "protocol specification includes roles, core objects, normative rules and conformance"
+    external_target: TBD
+  - candidate_id: CAND-0027
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-PAYRAIL"
+    maturity: C1
+    status: candidate
+    note: "wallet isolation, payment execution, settlement and receipt behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0028
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-PBX"
+    maturity: C0
+    status: candidate
+    note: "communications/distribution implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0029
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-PUBLIC-IP-DISTRICT"
+    maturity: C1
+    status: candidate
+    note: "IP provenance, rights, permission and licensing behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0030
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-SOVEREIGNTY"
+    maturity: C2
+    status: candidate
+    note: "Agent DID Runtime Standard v1 and authority-chain material already exist"
+    external_target: TBD
+  - candidate_id: CAND-0031
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/AGENTROPOLIS-TRVL-DSTRT"
+    maturity: C1
+    status: candidate
+    note: "governed travel/service routing, policy, payment and receipt behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0032
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/CREATOR-Universal-Lore-Engine"
+    maturity: C0
+    status: candidate
+    note: "creator/lore implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0033
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/HERMES-CITY"
+    maturity: C2
+    status: candidate
+    note: "coordination, identity, capability, project-spawn and receipt material identified"
+    external_target: TBD
+  - candidate_id: CAND-0034
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/WCM-HERMES-BLUEPRINT"
+    maturity: C1
+    status: candidate
+    note: "runtime/coordination blueprint is a likely profile/reference implementation"
+    external_target: TBD
+  - candidate_id: CAND-0035
+    repository: "AGENTROPOLIS-CITY-OF-AGENTS/WIRED-CHAOS-GTM"
+    maturity: C2
+    status: candidate
+    note: "shared GTM/UGC distribution layer and distribution OS already documented"
+    external_target: TBD
+  - candidate_id: CAND-0036
+    repository: "wiredchaos/CODEX"
+    maturity: C1
+    status: candidate
+    note: "workflow publication, governance, permission, audit and evidence behavior identified"
+    external_target: TBD
+  - candidate_id: CAND-0037
+    repository: "wiredchaos/NPC"
+    maturity: C0
+    status: candidate
+    note: "public implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0038
+    repository: "wiredchaos/PTS"
+    maturity: C0
+    status: candidate
+    note: "client portal implementation; reusable interoperability primitive not yet isolated"
+    external_target: TBD
+  - candidate_id: CAND-0039
+    repository: "wiredchaos/dyad"
+    maturity: C0
+    status: candidate
+    note: "generic application scaffold; reusable primitive not yet isolated"
+    external_target: TBD
+  - candidate_id: CAND-0040
+    repository: "wiredchaos/dyad33.3"
+    maturity: C0
+    status: candidate
+    note: "monorepo/application management implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0041
+    repository: "wiredchaos/dyadcitiz3n.h3x"
+    maturity: C0
+    status: candidate
+    note: "generic application implementation requires protocol discovery"
+    external_target: TBD
+  - candidate_id: CAND-0042
+    repository: "wiredchaos/hood-oracle-lenses"
+    maturity: C0
+    status: candidate
+    note: "application implementation requires protocol discovery"
+    external_target: TBD
