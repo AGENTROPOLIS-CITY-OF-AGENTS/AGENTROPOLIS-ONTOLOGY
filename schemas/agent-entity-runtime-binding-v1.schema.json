@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.example/schemas/agent-entity-runtime-binding-v1.schema.json",
+  "title": "AGENTROPOLIS AGENT-ENTITY Runtime Binding v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "runtime_binding_id",
+    "agent_entity_id",
+    "agent_did",
+    "runtime_id",
+    "credential_ref",
+    "state",
+    "issued_at"
+  ],
+  "properties": {
+    "runtime_binding_id": {"type": "string", "minLength": 1},
+    "agent_entity_id": {"type": "string", "minLength": 1},
+    "agent_did": {"type": "string", "minLength": 1},
+    "runtime_id": {"type": "string", "minLength": 1},
+    "harness_profile_id": {"type": ["string", "null"]},
+    "credential_ref": {"type": "string", "minLength": 1},
+    "dock_session_ref": {"type": ["string", "null"]},
+    "continuity_passport_ref": {"type": ["string", "null"]},
+    "proof_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "capability_policy_ref": {"type": ["string", "null"]},
+    "state": {"type": "string", "enum": ["active", "suspended", "revoked", "expired", "retired"]},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": ["string", "null"], "format": "date-time"}
+  }
+}
