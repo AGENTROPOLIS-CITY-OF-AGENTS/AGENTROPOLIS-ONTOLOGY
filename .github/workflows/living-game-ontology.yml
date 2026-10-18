@@ -1,0 +1,22 @@
+name: Living Game ontology
+on:
+  pull_request:
+    paths:
+      - 'ontology/living-game-classes.yaml'
+      - 'governance/living-game-invariants.yaml'
+      - 'docs/LIVING_GAME_ONTOLOGY.md'
+      - 'tests/test_living_game_ontology.py'
+      - '.github/workflows/living-game-ontology.yml'
+  push:
+    branches: [main]
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python -m unittest tests/test_living_game_ontology.py
