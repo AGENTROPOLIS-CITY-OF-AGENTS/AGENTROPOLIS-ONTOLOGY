@@ -84,3 +84,10 @@ Knowledge is hierarchical and federated: `CITY -> DISTRICT -> INSTITUTION/SYSTEM
 Trial or premium models such as OX Alpha may be evaluated and routed when useful, but the city must continue to operate when a trial ends, a provider disappears, prices change, or a better model replaces them.
 
 Optional runtime systems such as Munder Difflin may contribute PTY sessions, mailbox coordination, worktree isolation, telemetry, cost signals and circuit-breaker events through governed adapters. UHP-compatible harnesses may likewise provide task/session execution through the Docking District. They remain tenants of the Intelligence Grid and never become the authority or source of canonical city state.
+
+## Contextual thinking approaches
+
+- [Thinking approaches ontology](docs/THINKING_APPROACHES_ONTOLOGY.md): holistic, analytical, detail-oriented, sequential, and focused approaches scoped to tasks, with evidence and accessibility rules.
+- [Vocabulary](ontology/thinking-approaches.yaml) and [record schema](schemas/contextual-thinking-approach-v1.schema.json).
+
+Preference, observed behavior, assessed ability, and planned approach remain separate. These records are advisory context, never authority or intelligence scores. Runtime consumption requires verified integration.
