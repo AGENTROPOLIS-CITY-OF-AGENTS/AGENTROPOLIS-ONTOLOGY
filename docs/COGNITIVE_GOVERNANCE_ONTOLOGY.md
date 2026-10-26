@@ -85,3 +85,7 @@ The ontology classifies the reasoning used in a specific context. It must not st
 ## Governance invariant
 
 A cognitive assessment can inform, challenge, or block an operational decision. It cannot grant itself authority, alter the mandate, or self-certify missing evidence.
+
+## Contextual thinking approaches
+
+[Thinking approaches](THINKING_APPROACHES_ONTOLOGY.md) adds holistic, analytical, detail-oriented, sequential, and focused approaches as non-exclusive task context. Use the [record schema](../schemas/contextual-thinking-approach-v1.schema.json) to separate preferences, observed behavior, assessed ability, and plans. No equivalence to the cognitive-function instances above is asserted. Approach declarations do not establish capability, outcomes, or authority.
