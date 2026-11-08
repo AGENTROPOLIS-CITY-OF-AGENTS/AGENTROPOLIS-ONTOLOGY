@@ -80,6 +80,9 @@ Knowledge is hierarchical and federated: `CITY -> DISTRICT -> INSTITUTION/SYSTEM
 - `schemas/spatial-runtime-event-v1.schema.json` — normalized runtime-to-world-state event envelope
 - `governance/model-provider-invariants.yaml` — hard provider/model independence invariants
 - `governance/spatial-runtime-invariants.yaml` — city sovereignty, diorama, renderer, runtime-adapter and authority invariants
+- `docs/LIVING_GAME_ONTOLOGY.md` — Living Game Object, Human Signal Entity, device capability, physical authenticator, quest trigger, live reality session, broadcast destination and interoperability adapter semantics (canonical schemas owned by Gaming District; single Execution Envelope owned by ATG)
+- `ontology/living-game-classes.yaml` — machine-readable Living Game class registry
+- `governance/living-game-invariants.yaml` — evidence-not-authority, no tap-to-spend, no face recognition, no silent public broadcast, single-envelope invariants
 
 Trial or premium models such as OX Alpha may be evaluated and routed when useful, but the city must continue to operate when a trial ends, a provider disappears, prices change, or a better model replaces them.
 
