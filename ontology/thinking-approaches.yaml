@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0",
+  "namespace": "agentropolis.ontology.cognition.thinking_approaches",
+  "owner": "AGENTROPOLIS-ONTOLOGY",
+  "status": "contract_defined_runtime_unverified",
+  "classes": {
+    "ThinkingApproach": {
+      "description": "Non-exclusive operational approach used within a task."
+    },
+    "ThinkingApproachRecord": {
+      "description": "Contextual evidence-bearing record, not a permanent psychological type."
+    }
+  },
+  "instances": [
+    {
+      "id": "holistic"
+    },
+    {
+      "id": "analytical"
+    },
+    {
+      "id": "detail-oriented"
+    },
+    {
+      "id": "sequential"
+    },
+    {
+      "id": "focused"
+    }
+  ],
+  "record_kinds": [
+    "preference",
+    "observed_behavior",
+    "assessed_ability",
+    "planned_approach"
+  ],
+  "relationships": [
+    "performedBy",
+    "scopedTo",
+    "usesApproach",
+    "supportedBy",
+    "requestsSupport",
+    "hasOutcome",
+    "informs"
+  ],
+  "constraints": [
+    "Preference != ability != observed behavior != planned approach",
+    "Approach != authority",
+    "No gender, diagnosis, intelligence or brain-utilization inference",
+    "No automatic mapping to cognitive-function labels",
+    "Human records require governed access and correction",
+    "Runtime integration is not established by vocabulary publication"
+  ]
+}

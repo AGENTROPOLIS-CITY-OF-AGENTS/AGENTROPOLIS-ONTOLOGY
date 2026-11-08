@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Contextual thinking approach record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "actor_ref",
+    "actor_kind",
+    "task_ref",
+    "context",
+    "record_kind",
+    "approaches",
+    "evidence",
+    "recorded_at",
+    "outcome",
+    "support_preferences"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor_kind": {
+      "enum": [
+        "human",
+        "agent"
+      ]
+    },
+    "task_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "context": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_kind": {
+      "enum": [
+        "preference",
+        "observed_behavior",
+        "assessed_ability",
+        "planned_approach"
+      ]
+    },
+    "approaches": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "holistic",
+          "analytical",
+          "detail-oriented",
+          "sequential",
+          "focused"
+        ]
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "source_refs"
+      ],
+      "properties": {
+        "basis": {
+          "enum": [
+            "self_reported",
+            "observed",
+            "assessed",
+            "declared_plan"
+          ]
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "review_after": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "not_evaluated",
+            "met",
+            "partially_met",
+            "not_met"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "support_preferences": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "record_kind": {
+            "const": "preference"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "basis": {
+                "const": "self_reported"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "record_kind": {
+            "const": "observed_behavior"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "basis": {
+                "const": "observed"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "record_kind": {
+            "const": "assessed_ability"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "required": [
+              "method",
+              "scope"
+            ],
+            "properties": {
+              "basis": {
+                "const": "assessed"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "record_kind": {
+            "const": "planned_approach"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "properties": {
+              "basis": {
+                "const": "declared_plan"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "met",
+                  "partially_met",
+                  "not_met"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "properties": {
+              "evidence_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
