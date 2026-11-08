@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentropolis.example/schemas/greenrails-settlement-v1.schema.json",
+  "title": "Agentropolis GREENRAILS Settlement Ontology v1",
+  "description": "Canonical vocabulary for HOOD TERPS settlement through GREENRAILS: entities, states, fees, receipts, tier ownership. Wire-level schemas live in AGENTROPOLIS-PAY-PROTOCOL (settlement-quote/state/receipt). Mock-only; no funds move under this version.",
+  "type": "object",
+  "required": ["ontologyVersion", "mock", "displayNotice", "settlement"],
+  "additionalProperties": false,
+  "properties": {
+    "ontologyVersion": {"const": "agentropolis.greenrails-settlement.v1"},
+    "mock": {"const": true},
+    "displayNotice": {"const": "MOCK SETTLEMENT · NO FUNDS WILL MOVE"},
+    "settlement": {
+      "type": "object",
+      "required": ["id", "idempotencyKey", "state", "buyer", "seller", "legacyNft", "xentsLeg", "usdcPayoutLeg", "timeouts", "confirmationThresholds"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "idempotencyKey": {"type": "string", "minLength": 8},
+        "state": {"$ref": "#/$defs/SettlementState"},
+        "buyer": {"$ref": "#/$defs/Party"},
+        "seller": {"$ref": "#/$defs/Party"},
+        "legacyNft": {"$ref": "#/$defs/LegacyNft"},
+        "inputLeg": {"$ref": "#/$defs/InputLeg"},
+        "xentsLeg": {"$ref": "#/$defs/XentsLeg"},
+        "usdcPayoutLeg": {"$ref": "#/$defs/UsdcPayoutLeg"},
+        "fees": {"type": "array", "items": {"$ref": "#/$defs/Fee"}},
+        "timeouts": {"$ref": "#/$defs/Timeouts"},
+        "confirmationThresholds": {"$ref": "#/$defs/ConfirmationThresholds"},
+        "receipt": {"$ref": "#/$defs/Receipt"},
+        "ownership": {"$ref": "#/$defs/TierOwnership"}
+      }
+    }
+  },
+  "$defs": {
+    "Amount": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,18})?$"},
+    "Chain": {"enum": ["base", "ethereum", "polygon", "solana", "xrpl", "fiat"]},
+    "Tier": {
+      "enum": ["T0_GOVERNANCE_RISK", "T1_MONETARY_AUTHORITY", "T2_PROTOCOL_EXECUTION", "T3_LEDGER_TREASURY", "T4_COMMERCE_CONSUMER", "T5_OBSERVABILITY_OPS"]
+    },
+    "SettlementState": {
+      "enum": [
+        "QUOTED", "USDC_RESERVED", "INPUT_AUTHORIZED", "XENTS_ROUTED", "NFT_TRANSFER_PENDING",
+        "NFT_TRANSFER_CONFIRMED", "USDC_RELEASED", "RECEIPT_FINALIZED",
+        "QUOTE_EXPIRED", "INPUT_FAILED", "INSUFFICIENT_LIQUIDITY", "NFT_OWNERSHIP_CHANGED",
+        "NFT_TRANSFER_FAILED", "CHAIN_CONFIRMATION_TIMEOUT", "USDC_PAYOUT_FAILED",
+        "REFUND_PENDING", "REFUNDED", "MANUAL_REVIEW"
+      ]
+    },
+    "TerminalState": {
+      "enum": ["RECEIPT_FINALIZED", "QUOTE_EXPIRED", "INPUT_FAILED", "INSUFFICIENT_LIQUIDITY", "REFUNDED", "MANUAL_REVIEW"]
+    },
+    "Party": {
+      "type": "object",
+      "required": ["id", "role"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "role": {"enum": ["buyer", "seller"]},
+        "wallet": {"type": "string"},
+        "walletChain": {"$ref": "#/$defs/Chain"},
+        "payoutWallet": {"type": "string", "description": "Seller only; Base address for USDC."}
+      }
+    },
+    "LegacyNft": {
+      "type": "object",
+      "required": ["nativeChain", "contract", "tokenId", "burnForbidden"],
+      "additionalProperties": false,
+      "properties": {
+        "nativeChain": {"$ref": "#/$defs/Chain"},
+        "contract": {"type": "string", "minLength": 1},
+        "tokenId": {"type": "string", "minLength": 1},
+        "ownerAtQuote": {"type": "string"},
+        "burnForbidden": {"const": true},
+        "bridgeForbidden": {"const": true, "default": true}
+      }
+    },
+    "InputLeg": {
+      "type": "object",
+      "required": ["assetClass", "asset", "maxAmount", "rail"],
+      "additionalProperties": false,
+      "properties": {
+        "assetClass": {
+          "description": "Aligned with regulated-digital-money-v1 AssetClass.",
+          "enum": ["fiat_bank_deposit", "regulated_stablecoin", "cryptoasset"]
+        },
+        "asset": {"type": "string", "minLength": 2},
+        "maxAmount": {"$ref": "#/$defs/Amount"},
+        "rail": {"enum": ["card", "ach", "wire", "base_usdc", "base_eth", "ethereum_eth", "xrpl_xrp", "xrpl_rlusd", "solana_sol"]},
+        "authorizationStatus": {"enum": ["pending", "authorized", "captured", "declined", "voided", "refunded"]}
+      }
+    },
+    "XentsLeg": {
+      "type": "object",
+      "required": ["asset", "chain", "exactOutput", "purpose"],
+      "additionalProperties": false,
+      "properties": {
+        "asset": {"const": "XENTS"},
+        "chain": {"const": "base"},
+        "exactOutput": {"$ref": "#/$defs/Amount"},
+        "purpose": {"const": "participation_settlement", "description": "$XENTS is mandatory for paid participation; never a mandatory seller payout asset."},
+        "routeStatus": {"enum": ["pending", "routed", "failed"]}
+      }
+    },
+    "UsdcPayoutLeg": {
+      "type": "object",
+      "required": ["asset", "chain", "amount", "reservationStatus"],
+      "additionalProperties": false,
+      "properties": {
+        "asset": {"const": "USDC"},
+        "chain": {"const": "base"},
+        "amount": {"$ref": "#/$defs/Amount"},
+        "destination": {"type": "string"},
+        "reservationStatus": {"enum": ["none", "held", "released", "returned", "failed"]},
+        "payoutStatus": {"enum": ["pending", "submitted", "released", "failed"]}
+      }
+    },
+    "Fee": {
+      "type": "object",
+      "required": ["code", "payer", "asset", "amount"],
+      "additionalProperties": false,
+      "properties": {
+        "code": {"enum": ["network", "routing", "processing", "platform", "escrow"]},
+        "payer": {"enum": ["buyer", "seller"]},
+        "asset": {"type": "string", "minLength": 2},
+        "amount": {"$ref": "#/$defs/Amount"}
+      }
+    },
+    "Timeouts": {
+      "type": "object",
+      "required": ["quoteTtlSeconds", "inputAuthorizationSeconds", "nftTransferSeconds", "usdcPayoutSeconds"],
+      "additionalProperties": false,
+      "properties": {
+        "quoteTtlSeconds": {"type": "integer", "minimum": 1},
+        "inputAuthorizationSeconds": {"type": "integer", "minimum": 1},
+        "nftTransferSeconds": {"type": "integer", "minimum": 1},
+        "usdcPayoutSeconds": {"type": "integer", "minimum": 1}
+      }
+    },
+    "ConfirmationThresholds": {
+      "type": "object",
+      "required": ["nftChainConfirmations", "baseConfirmations"],
+      "additionalProperties": false,
+      "properties": {
+        "nftChainConfirmations": {"type": "integer", "minimum": 1},
+        "baseConfirmations": {"type": "integer", "minimum": 1},
+        "inputChainConfirmations": {"type": "integer", "minimum": 1}
+      }
+    },
+    "Receipt": {
+      "type": "object",
+      "required": ["id", "finalState", "nftTransferVerified", "usdcPayoutVerified", "evidenceDigest", "signature"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "finalState": {"$ref": "#/$defs/TerminalState"},
+        "nftTransferVerified": {"type": "boolean"},
+        "usdcPayoutVerified": {"type": "boolean"},
+        "evidenceDigest": {"type": "string", "minLength": 16},
+        "signature": {
+          "type": "object",
+          "required": ["alg", "kid", "signer", "canonicalization", "payloadDigest", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "alg": {"enum": ["ed25519", "es256", "es256k", "mock-none"]},
+            "kid": {"type": "string", "minLength": 1},
+            "signer": {"type": "string", "minLength": 1},
+            "canonicalization": {"const": "rfc8785-jcs"},
+            "payloadDigest": {"type": "string", "minLength": 16},
+            "value": {"type": "string", "minLength": 1}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"finalState": {"const": "RECEIPT_FINALIZED"}}},
+          "then": {"properties": {"nftTransferVerified": {"const": true}, "usdcPayoutVerified": {"const": true}}}
+        }
+      ]
+    },
+    "TierOwnership": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "governance": {"const": "T0_GOVERNANCE_RISK"},
+        "monetaryAuthority": {"const": "T1_MONETARY_AUTHORITY"},
+        "execution": {"const": "T2_PROTOCOL_EXECUTION"},
+        "ledger": {"const": "T3_LEDGER_TREASURY"},
+        "consumer": {"const": "T4_COMMERCE_CONSUMER"},
+        "observability": {"const": "T5_OBSERVABILITY_OPS"}
+      }
+    }
+  }
+}

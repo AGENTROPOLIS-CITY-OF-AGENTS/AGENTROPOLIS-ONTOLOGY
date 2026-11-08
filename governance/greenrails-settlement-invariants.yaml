@@ -1,0 +1,72 @@
+version: 1
+status: active
+scope: GREENRAILS x XENTS x HOOD-TERPS
+ontology_version: agentropolis.greenrails-settlement.v1
+wire_schemas: AGENTROPOLIS-PAY-PROTOCOL/schemas/settlement-{quote,state,receipt}.schema.json
+
+core_law: "No buyer funds are accepted before seller USDC is reserved; nothing is complete until NFT transfer and USDC payout are both verified."
+
+mock_boundary:
+  mock_required: true
+  display_notice: "MOCK SETTLEMENT · NO FUNDS WILL MOVE"
+  live_flag_default: false
+  live_flag_gates: [security, legal_compliance, custody_liquidity, rollback, explicit_human_approval]
+  forbidden_actions: [swap_execution, token_transfer, payout, wallet_signature]
+
+tiers:
+  T0_GOVERNANCE_RISK: [SOVEREIGNTY, AEGIS-ASSURANCE, 54T, SENTINEL-6]
+  T1_MONETARY_AUTHORITY: [XENTS-CAPITAL-GRID]
+  T2_PROTOCOL_EXECUTION: [PAY-PROTOCOL, PAYRAIL, GREENRAILS]
+  T3_LEDGER_TREASURY: [54-FISCAL-CMD]
+  T4_COMMERCE_CONSUMER: [HOOD-TERPS, MAIN-STREET, CREATOR, GAMING-DISTRICT, DOCK]
+  T5_OBSERVABILITY_OPS: [MISSION-CONTROL, DEPLOY, HUB, AQUADUCT]
+
+invariants:
+  - id: reserve-before-accept
+    rule: "USDC payout amount MUST be fully reserved (reservation.status = held) before any transition to INPUT_AUTHORIZED."
+    enforced_by: T2_PROTOCOL_EXECUTION
+    violation_state: INSUFFICIENT_LIQUIDITY
+  - id: dual-verify-before-complete
+    rule: "RECEIPT_FINALIZED requires nftTransferVerified = true AND usdcPayoutVerified = true, each with a tx reference meeting its confirmation threshold."
+    enforced_by: T2_PROTOCOL_EXECUTION
+    audited_by: T0_GOVERNANCE_RISK
+  - id: no-burn-legacy-nft
+    rule: "Legacy NFT stays on its native chain; transfer destination is a wallet, never a burn address; bridging is forbidden."
+    enforced_by: T2_PROTOCOL_EXECUTION
+    schema_field: legacyNft.burnForbidden
+  - id: xents-mandatory-participation-not-payout
+    rule: "$XENTS is mandatory for paid HOOD TERPS participation/settlement; it is never a mandatory seller payout asset and sellers are never required to accept it."
+    enforced_by: T1_MONETARY_AUTHORITY
+    schema_field: xentsLeg.purpose
+  - id: usdc-base-payout
+    rule: "Seller payout asset is USDC on Base. No ETH payout requirement."
+    enforced_by: T2_PROTOCOL_EXECUTION
+    schema_field: usdcPayoutLeg
+  - id: exact-output-xents
+    rule: "Routed $XENTS output MUST equal the quoted exactOutput; unused buyer input is not collected."
+    enforced_by: T2_PROTOCOL_EXECUTION
+  - id: non-atomic-governed-escrow
+    rule: "Cross-chain steps are separate transitions with timeouts, confirmation thresholds, and compensating refunds; atomicity is never assumed."
+    enforced_by: T2_PROTOCOL_EXECUTION
+  - id: no-auto-refund-after-nft-moved
+    rule: "Once NFT_TRANSFER_CONFIRMED, buyer is never refunded automatically; payout failure routes to bounded retry then MANUAL_REVIEW."
+    enforced_by: T2_PROTOCOL_EXECUTION
+    escalates_to: T0_GOVERNANCE_RISK
+  - id: idempotent-side-effects
+    rule: "Every quote/state/receipt carries idempotencyKey; each provider side effect uses a derived per-step key."
+    enforced_by: T2_PROTOCOL_EXECUTION
+  - id: receipt-per-terminal-state
+    rule: "Every terminal state produces a signed receipt (JCS canonical, mock-none alg only while mock = true)."
+    enforced_by: T2_PROTOCOL_EXECUTION
+    recorded_by: T3_LEDGER_TREASURY
+  - id: free-actions-stay-free
+    rule: "Site/lore viewing, wallet connect, ownership proof, basic Legacy Passport, free Genesis Signal Pack, GTM points, previews never enter the settlement flow."
+    enforced_by: T4_COMMERCE_CONSUMER
+  - id: no-value-claims
+    rule: "No fixed-price, appreciation, yield, profit-sharing, redemption, or permanent-peg claims in code, docs, or UI copy; fees are disclosed amounts only."
+    enforced_by: T0_GOVERNANCE_RISK
+
+canonical_states:
+  success_path: [QUOTED, USDC_RESERVED, INPUT_AUTHORIZED, XENTS_ROUTED, NFT_TRANSFER_PENDING, NFT_TRANSFER_CONFIRMED, USDC_RELEASED, RECEIPT_FINALIZED]
+  failure: [QUOTE_EXPIRED, INPUT_FAILED, INSUFFICIENT_LIQUIDITY, NFT_OWNERSHIP_CHANGED, NFT_TRANSFER_FAILED, CHAIN_CONFIRMATION_TIMEOUT, USDC_PAYOUT_FAILED, REFUND_PENDING, REFUNDED, MANUAL_REVIEW]
+  terminal: [RECEIPT_FINALIZED, QUOTE_EXPIRED, INPUT_FAILED, INSUFFICIENT_LIQUIDITY, REFUNDED, MANUAL_REVIEW]
